@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 *.pyo
 .env
+database.db
+20170512-110547/
+voice based taskmanagement - Copy/

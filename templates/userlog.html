@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>VOICE BASED  TASK MANAGEMENT</title>
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"></link> -->
+        <!-- Favicon-->
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="http://127.0.0.1:5000/static/css/styles.css" rel="stylesheet" />
+        <style>
+           #form1{
+                width: 70%;
+                margin: auto;
+                /* border: 1px solid #ddd; */
+                padding: 25px;
+                background-color: rgba(0, 0, 0, 0.70);
+                text-align: left !important;
+
+            }
+
+            
+
+        </style>
+    </head>
+    <body id="Body" style="height: 100vh;">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <!-- <li class="nav-item"><a class="nav-link" href="#page-top">AUTISM</a></li> -->
+                <a class="navbar-brand h1" href="/">VOICE BASED  TASK MANAGEMENT</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                  Menu
+                  <i class="fas fa-bars ms-1"></i>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarResponsive">
+                  <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                      <li class="nav-item"><a class="nav-link" href="/">Logout</a></li>
+                  </ul>
+              </div>
+            </div>
+        </nav>
+
+        
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container">
+                  {% if msg %}
+                      <center><b>{{msg}}</b></center>
+                  {% endif %}
+                  <br>
+                <div id="form1">
+                    <center><h2>Tasks</h2></center>
+                    <hr>
+                    {% if tasks %}
+                    <table class="table" style="color: white;">
+                      <tr>
+                        <th>Name</th>
+                        <th>Task</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                      </tr>
+                      {% for row in tasks %}
+                      <tr>
+                        {% for col in row %}
+                        <td>{{col}}</td>
+                    {% endfor %}
+                      </tr>
+                    {% endfor %}
+                    </table>
+                    {% endif %}
+                </div>
+            </div>
+
+        </header>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="http://127.0.0.1:5000/static/js/scripts.js"></script>
+        <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                let body = document.getElementById("Body");
+                let except = document.getElementById("form1");
+          
+                body.addEventListener("click", function () {
+                    console.log("body");
+                    $.ajax({
+                        url: "/gettask",
+                        success: function (res) {
+                            console.log(res)
+                            $.ajax({
+                                url: "/getdate",
+                                success: function (res) {
+                                    console.log(res)
+                                    $.ajax({
+                                        url: "/gettime",
+                                        success: function (res) {
+                                            console.log(res)
+                                            $.ajax({
+                                                url: "/addtaskblindperson",
+                                                success: function (res) {
+                                                    console.log(res)
+                                                    window.location.href = "/blindhome";
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }, false);
+          
+                except.addEventListener("click", function (ev) {
+                    console.log("form");
+                    ev.stopPropagation(); // Prevents the body click event
+                }, false);
+            });
+          </script>
+    </body>
+</html>
